@@ -1,14 +1,12 @@
 package quarkus;
 
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Path("/temperaturas")
 public class TemperaturasResource {
@@ -46,10 +44,11 @@ public class TemperaturasResource {
        }
     }
 
-    /*@GET
+    @GET
+    @Path("{ciudad}")
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/una")
-    public Temperatura medicion(){
-        return new Temperatura("Malaga", 18, 28);
-    }*/
+    public Temperatura sacar(@PathParam("ciudad") String ciudad){
+        return temperaturas.sacarTemperatura(ciudad)
+                .orElseThrow(() -> new NoSuchElementException("No hay registro para la ciudad de " + ciudad));
+    }
 }
