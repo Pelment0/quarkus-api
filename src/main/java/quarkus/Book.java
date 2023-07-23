@@ -1,5 +1,6 @@
 package quarkus;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -8,11 +9,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-public class Book {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Book extends PanacheEntity { //Extender de PanacheEntity nos brinda un monton de metodos estaticos para interactuar con la bd
     private String title;
 
     private int numPages;
@@ -20,14 +17,6 @@ public class Book {
     private LocalDate publicationDate;
 
     private String description;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 
     public String getTitle() {
         return title;
