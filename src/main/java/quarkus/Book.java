@@ -1,15 +1,27 @@
 package quarkus;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
+
+/* Podemos hacer que la clase Book herede de PanacheEntity para que la propia clase Book tenga los metodos de Panache para
+   interactuar con la bd, pero lo haremos a través de una clase BookResource para que haya más modularidad
+   y quede un codigo más limpio
+*/
+
 @Entity
-public class Book extends PanacheEntity { //Extender de PanacheEntity nos brinda un monton de metodos estaticos para interactuar con la bd
+public class Book {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private String title;
 
     private int numPages;
@@ -17,6 +29,20 @@ public class Book extends PanacheEntity { //Extender de PanacheEntity nos brinda
     private LocalDate publicationDate;
 
     private String description;
+
+    @CreationTimestamp
+    private LocalDate createDate;
+
+    @UpdateTimestamp
+    private LocalDate updateDate;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -48,6 +74,22 @@ public class Book extends PanacheEntity { //Extender de PanacheEntity nos brinda
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public LocalDate getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDate createDate) {
+        this.createDate = createDate;
+    }
+
+    public LocalDate getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(LocalDate updateDate) {
+        this.updateDate = updateDate;
     }
 
     @Override
